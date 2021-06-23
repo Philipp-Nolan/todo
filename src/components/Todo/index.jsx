@@ -5,29 +5,37 @@ import Main from './Main';
 import style from './style.module.sass';
 import dataList from '../../data/data';
 
-function Todo() {
-  const noteDelete = (event) => {
-    console.dir(event.target);
+function Todo(props) {
+  const [noteList, setNoteList] = useState(dataList);
+
+  const inputHandler = (value) => {
+    const date = new Date().toLocaleDateString();
+    const temp = {
+      id: uuidv4(),
+      note: value.note,
+      date: date,
+    };
+
+    setNoteList({
+      noteList: [noteList.state, temp],
+    });
+
+    console.log(noteList);
   };
-
-  // const inputHandler = (event) => {
-  //   console.log(event);
-  // };
-
-  const list = dataList.map(function (element) {
-    return (
-      <ul key={element.id}>
-        <li>
-          {element.note} {element.date}
-        </li>
-      </ul>
-    );
-  });
+  // const list = noteList.map(function (element) {
+  //   return (
+  //     <ul key={element.id}>
+  //       <li>
+  //         {element.note} {element.date}
+  //       </li>
+  //     </ul>
+  //   );
+  // });
 
   return (
     <div className={style.todoContainer}>
-      <Header />
-      <Main list={list} />
+      <Header inputHandler={inputHandler} />
+      {/* <Main list={list} /> */}
     </div>
   );
 }
